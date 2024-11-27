@@ -154,8 +154,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="bio">Bio:</label>
         <textarea name="bio"><?php echo $bio; ?></textarea><br>
 
-        <p><strong>Account Created:</strong> <?php echo $created_at; ?></p>
-        <p><strong>Last Login:</strong> <?php echo $last_login; ?></p><br>
 
         <h3>Change Password</h3>
         <label for="old_password">Old Password:</label>

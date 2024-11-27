@@ -307,7 +307,7 @@ $conn->close();
         <!-- Profile & Welcome Message -->
         <div class="container">
             <div class="user-profile">
-                <img src="path_to_profile_picture.jpg" alt="Profile Picture" class="profile-pic">
+                <!-- <img src="path_to_profile_picture.jpg" alt="Profile Picture" class="profile-pic"> -->
                 <h1>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
             </div>
         </div>

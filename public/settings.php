@@ -146,7 +146,7 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : 'Not provided';
         </nav>
 
         <div class="profile-overview">
-            <img src="path_to_profile_picture.jpg" alt="Profile Picture" class="profile-pic">
+            <!-- <img src="path_to_profile_picture.jpg" alt="Profile Picture" class="profile-pic"> -->
             <h2><?php echo htmlspecialchars($_SESSION['username']); ?></h2>
             <p>Email: <?php echo htmlspecialchars($email); ?></p> <!-- Safely display email -->
         </div>
