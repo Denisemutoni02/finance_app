@@ -92,6 +92,8 @@ if (isset($_SESSION['user_id'])) {
             color: white;
         }
     </style>
+
+    
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -121,6 +123,7 @@ if (isset($_SESSION['user_id'])) {
         <div class="container">
             <h1>Welcome to MoneyWise</h1>
             <p>Your personal finance management tool to track expenses, set budgets, and achieve financial freedom.</p>
+            <h2 class="slogan">Spend Smart. Live Bold.</h2> <!-- Slogan added here -->
             <style>
                 .container h1{
                 color: #fff;
@@ -129,6 +132,16 @@ if (isset($_SESSION['user_id'])) {
                     color: #fff;
                 }
             </style>
+
+            <style>
+                .hero .slogan {
+                font-size: 24px;
+                font-weight: bold;
+             color: #ffce56; /* Accent color */
+             margin-top: 20px;
+                }
+             </style>
+
             <div class="cta">
                 <a href="public/register.php" class="btn">Get Started</a>
                 <a href="#features" class="btn btn-secondary">Learn More</a>
@@ -136,34 +149,41 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </header>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <h2>Why Use MoneyWise?</h2>
-            <div class="features-grid">
-                <div class="feature">
-                    <i class="fa fa-wallet"></i>
-                    <h3>Track Expenses</h3>
-                    <p>Easily record and categorize your daily spending.</p>
-                </div>
-                <div class="feature">
-                    <i class="fa fa-dollar-sign"></i>
-                    <h3>Set Budgets</h3>
-                    <p>Stay within your limits with budget management tools.</p>
-                </div>
-                <div class="feature">
-                    <i class="fa fa-chart-pie"></i>
-                    <h3>View Reports</h3>
-                    <p>Analyze your financial data with visualized charts and graphs.</p>
-                </div>
-                <div class="feature">
-                    <i class="fa fa-lock"></i>
-                    <h3>Secure</h3>
-                    <p>Your data is protected with advanced encryption methods.</p>
-                </div>
+
+
+   <!-- Features Section -->
+<section id="features" class="features">
+    <div class="container">
+        <h2>Why Use MoneyWise?</h2>
+        <p>MoneyWise helps you stay on top of your finances with tools designed to make budgeting, tracking, and analyzing your spending easy and efficient.</p>
+        
+        <div class="features-grid">
+            <div class="feature">
+                <i class="fa fa-wallet"></i>
+                <h3>Track Expenses</h3>
+                <p>Easily record and categorize your daily spending with just a few clicks.</p>
+            </div>
+            <div class="feature">
+                <i class="fa fa-dollar-sign"></i>
+                <h3>Set Budgets</h3>
+                <p>Set monthly limits for each category and monitor your spending to stay within budget.</p>
+            </div>
+            <div class="feature">
+                <i class="fa fa-chart-pie"></i>
+                <h3>View Reports</h3>
+                <p>Analyze your financial data with visualized charts and detailed reports.</p>
+            </div>
+            <div class="feature">
+                <i class="fa fa-lock"></i>
+                <h3>Secure</h3>
+                <p>Your data is protected with advanced encryption to keep it safe and private.</p>
             </div>
         </div>
-    </section>
+
+       
+    </div>
+</section>
+
 
     <!-- Call to Action -->
     <section class="cta-section">
