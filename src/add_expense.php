@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($category) || empty($amount) || empty($expense_date)) {
         die("All fields except description are required.");
     }
+    
 
     // Insert expense into the database
     $query = "INSERT INTO expenses (user_id, category, amount, expense_date, description) VALUES (?, ?, ?, ?, ?)";
