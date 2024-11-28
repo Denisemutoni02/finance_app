@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../assets/styles.css"> <!-- Link to your external CSS file -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> <!-- Font Awesome -->
     <style>
+         
         /* Logo Styles */
         .logo {
             display: flex;

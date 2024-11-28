@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 
 // Check if the user is logged in
@@ -8,15 +8,12 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Simulate fetching user data (replace with actual database queries)
-$username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
-$email = isset($_SESSION['email']) ? $_SESSION['email'] : ''; 
-$profile_picture = isset($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : 'uploads/default_profile.jpg'; 
-$full_name = isset($_SESSION['full_name']) ? $_SESSION['full_name'] : 'John Doe';
-$created_at = isset($_SESSION['created_at']) ? $_SESSION['created_at'] : '2022-01-01';
-$last_login = isset($_SESSION['last_login']) ? $_SESSION['last_login'] : '2022-01-01';
-$phone = isset($_SESSION['phone']) ? $_SESSION['phone'] : '';
-$address = isset($_SESSION['address']) ? $_SESSION['address'] : '';
-$bio = isset($_SESSION['bio']) ? $_SESSION['bio'] : '';
+$username = $_SESSION['username'] ?? '';
+$email = $_SESSION['email'] ?? ''; 
+$profile_picture = $_SESSION['profile_picture'] ?? 'uploads/default_profile.jpg'; // Default image if none exists
+$phone = $_SESSION['phone'] ?? '';
+$address = $_SESSION['address'] ?? '';
+$bio = $_SESSION['bio'] ?? '';
 
 // Handle Profile Update
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -62,7 +59,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Profile</title>
     <link rel="stylesheet" href="../assets/styles3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
     <style>
         /* Logo Styles */
         .logo {
@@ -87,7 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: #ffce56; /* Accent color for "Wise" */
         }
 
-        /* Navigation Bar */
         .navbar {
             display: flex;
             justify-content: center;
@@ -112,6 +107,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             align-items: center;
             margin-bottom: 20px;
         }
+
+        /* Main Content */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            .profile-pic {
+                width: 120px;
+                height: 120px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -130,67 +167,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!-- Main Content -->
 <div class="container">
-    <h2>Update Profile</h2>
+    <h2>Profile</h2>
 
     <form method="POST" action="profile.php" enctype="multipart/form-data">
-        <div class="profile-picture-container">
-            <img id="profile_picture_preview" src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-pic">
-            <input type="file" id="profile_picture_input" name="profile_picture" accept="image/*">
-            <button type="button" id="crop_picture_button">Crop Picture</button>
-        </div>
+      
 
+        <!-- Form Fields -->
         <label for="username">Username:</label>
-        <input type="text" name="username" value="<?php echo $username; ?>" required><br>
+        <input type="text" name="username" value="<?php echo htmlspecialchars($username); ?>" required>
 
         <label for="email">Email:</label>
-        <input type="email" name="email" value="<?php echo $email; ?>" required><br>
+        <input type="email" name="email" value="<?php echo htmlspecialchars($email); ?>" required>
 
         <label for="phone">Phone:</label>
-        <input type="text" name="phone" value="<?php echo $phone; ?>"><br>
+        <input type="text" name="phone" value="<?php echo htmlspecialchars($phone); ?>">
 
         <label for="address">Address:</label>
-        <textarea name="address"><?php echo $address; ?></textarea><br>
+        <textarea name="address"><?php echo htmlspecialchars($address); ?></textarea>
 
         <label for="bio">Bio:</label>
-        <textarea name="bio"><?php echo $bio; ?></textarea><br>
+        <textarea name="bio"><?php echo htmlspecialchars($bio); ?></textarea>
 
-
+        <!-- Password Change Section -->
         <h3>Change Password</h3>
         <label for="old_password">Old Password:</label>
-        <input type="password" name="old_password"><br>
+        <input type="password" name="old_password">
 
         <label for="new_password">New Password:</label>
-        <input type="password" name="new_password" id="new_password" onkeyup="checkPasswordStrength()" required><br>
+        <input type="password" name="new_password" id="new_password" onkeyup="checkPasswordStrength()" required>
         <div id="password-strength-status"></div>
 
         <label for="confirm_password">Confirm New Password:</label>
-        <input type="password" name="confirm_password"><br>
+        <input type="password" name="confirm_password">
 
         <button type="submit">Update Profile</button>
     </form>
 </div>
 
 <!-- Scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
 <script>
-    const input = document.getElementById('profile_picture_input');
-    const preview = document.getElementById('profile_picture_preview');
-    const cropper = new Cropper(preview, { aspectRatio: 1 });
-
-    input.addEventListener('change', () => {
-        const file = input.files[0];
-        const reader = new FileReader();
-        reader.onload = () => {
-            preview.src = reader.result;
-            cropper.replace(reader.result);
-        };
-        reader.readAsDataURL(file);
-    });
-
-    document.getElementById('crop_picture_button').addEventListener('click', () => {
-        const croppedDataUrl = cropper.getCroppedCanvas().toDataURL();
-        preview.src = croppedDataUrl;
-    });
+    function previewProfilePicture(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const preview = document.getElementById('profile_picture_preview');
+                preview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
 
     function checkPasswordStrength() {
         const password = document.getElementById('new_password').value;

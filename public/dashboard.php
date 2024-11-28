@@ -328,17 +328,33 @@ $conn->close();
             </div>
         </div>
 
-        <!-- Budget Overrun Alert -->
-        <?php if ($total_expenses > $total_budget): ?>
-            <div class="alert alert-danger">
-                <strong>Warning!</strong> Your spending has exceeded the budget!
-            </div>
-        <?php endif; ?>
+        <?php
+// Check if the total budget is greater than zero to avoid division by zero
+if ($total_budget > 0) {
+    $overrun_percentage = ($total_expenses - $total_budget) / $total_budget * 100;
 
-        <!-- Floating Action Button (FAB) for adding expense -->
-        <a href="add_expense.php" class="fab">
-            <i class="fa fa-plus-circle"></i>
-        </a>
+    // Determine alert class based on severity
+    if ($overrun_percentage > 50) {
+        $alert_class = 'alert-severe'; // Severe overrun
+    } elseif ($overrun_percentage > 20) {
+        $alert_class = 'alert-moderate'; // Moderate overrun
+    } else {
+        $alert_class = 'alert-minor'; // Minor overrun
+}
+} else {
+    $overrun_percentage = 0; // Default to 0 if no budget is set
+    $alert_class = 'alert-minor'; // Default alert class
+}
+?>
+
+<!-- Budget Overrun Alert -->
+<?php if ($total_expenses > $total_budget): ?>
+    <div class="alert <?php echo $alert_class; ?>">
+        <strong>Warning!</strong> Your spending has exceeded the budget by <?php echo round($overrun_percentage); ?>%.
+    </div>
+<?php endif; ?>
+
+
 
          <!-- Graphs Section -->
          <div class="charts-container">
@@ -354,8 +370,16 @@ $conn->close();
                 <h3>Spending Over Time (Line Graph)</h3>
                 <canvas id="lineChart" width="300" height="200"></canvas>
             </div>
+
+             
         </div>
+          <!-- Floating Action Button (FAB) for adding expense -->
+      <a href="add_expense.php" class="fab">
+            <i class="fa fa-plus-circle"></i>
+        </a>
     </div>
+
+      
 
 </div>
 
@@ -376,6 +400,28 @@ $conn->close();
         padding: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
+
+    .alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.alert-minor {
+    background-color: #f39c12; /* Orange - minor warning */
+}
+
+.alert-moderate {
+    background-color: #e74c3c; /* Red - moderate warning */
+}
+
+.alert-severe {
+    background-color: #c0392b; /* Dark red - severe warning */
+}
+
 </style>
 
 <script>

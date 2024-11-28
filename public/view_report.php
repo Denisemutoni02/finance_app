@@ -145,7 +145,7 @@ $conn->close();
     </table>
 
     <!-- Chart: Monthly Trends -->
-    <canvas id="monthlyChart" width="400" height="200"></canvas>
+    <canvas id="monthlyChart" width="300" height="150"></canvas>
 </div>
 
 <script>

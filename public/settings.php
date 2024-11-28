@@ -46,33 +46,27 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : 'Not provided';
         }
 
         .logo .logo-text span {
-            color: #ffce56; /* Accent color */
+            color: #ffce56;
         }
 
-        /* General Styles for the logo's container */
+        /* General Styles */
         .logo-container {
-            text-align: center; /* Ensures the logo is centered */
+            text-align: center;
             margin-bottom: 20px;
         }
 
         .settings-wrapper {
-            margin-top: 10px; /* Space adjustment to compensate for the logo */
-            max-width: 800px; /* Set a max-width for the settings container */
-            margin: 0 auto; /* Center the settings container horizontally */
+            margin-top: 10px;
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
-            text-align: center; /* Center-align text */
-        }
-
-        .settings-wrapper .profile-overview,
-        .settings-wrapper .setting-item {
-            text-align: center; /* Center the content of profile overview and settings items */
+            text-align: center;
         }
 
         .dark-mode .logo .logo-text {
             color: white;
         }
 
-        /* Adjust form elements to center-align */
         .setting-item {
             margin-bottom: 15px;
             text-align: center;
@@ -138,7 +132,7 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : 'Not provided';
     </div>
 </div>
 
-<!-- Settings Wrapper inside a container -->
+<!-- Settings Wrapper -->
 <div class="container">
     <div class="settings-wrapper">
         <nav class="breadcrumb">
@@ -146,17 +140,16 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : 'Not provided';
         </nav>
 
         <div class="profile-overview">
-            <!-- <img src="path_to_profile_picture.jpg" alt="Profile Picture" class="profile-pic"> -->
             <h2><?php echo htmlspecialchars($_SESSION['username']); ?></h2>
-            <p>Email: <?php echo htmlspecialchars($email); ?></p> <!-- Safely display email -->
+            <p>Email: <?php echo htmlspecialchars($email); ?></p>
         </div>
 
-        <h2>Update Settings</h2>
+        <h2> Settings</h2>
 
         <!-- Dark Mode Toggle -->
         <div class="setting-item">
             <label for="dark_mode">Dark Mode</label>
-            <button id="darkModeToggle" class="btn btn-primary">
+            <button id="darkModeToggle" class="btn">
                 <?php echo $dark_mode ? 'Disable Dark Mode' : 'Enable Dark Mode'; ?>
             </button>
         </div>
@@ -187,8 +180,25 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : 'Not provided';
     </div>
 </div>
 
+<!-- JavaScript for Dark Mode Toggle -->
 <script>
-// Your existing JavaScript logic remains the same
+const darkModeToggle = document.getElementById('darkModeToggle');
+darkModeToggle.addEventListener('click', async () => {
+    const response = await fetch('../public/update_dark_mode.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'toggle_dark_mode=1'
+    });
+
+    const result = await response.json();
+    if (result.dark_mode) {
+        document.body.classList.add('dark-mode');
+        darkModeToggle.textContent = 'Disable Dark Mode';
+    } else {
+        document.body.classList.remove('dark-mode');
+        darkModeToggle.textContent = 'Enable Dark Mode';
+    }
+});
 </script>
 
 </body>
